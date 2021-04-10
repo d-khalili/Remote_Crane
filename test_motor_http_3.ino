@@ -39,14 +39,14 @@ void setup(){
     analogWrite(motorPin5, 300);
     delay(2000);
     digitalWrite(motorPin5, 0);
-    server.send(200);
-
+    server.send(200, "text/plain", webpage_off));
   });
-  server.on("/off", HTTP_GET, [](){
+
+  server.on("/", HTTP_GET, [](){
     Serial.println();
     Serial.print("Got Request OFF!");
     analogWrite(motorPin5, 0);
-    server.send(200);
+    server.send(200, "text/plain", webpage_on);
   });
 
   server.begin();

@@ -6,8 +6,8 @@
   </head>
   <body>
 
-    <form action="/on" method="get">
-      <input type="submit" value="Turn On">
+    <form action="/" method="get">
+      <input type="submit" value="Turn Off">
     </form>
 
   </body>
