@@ -2,7 +2,10 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266WiFi.h>
 
-int motorPin5 = 5;
+int Pin5 = 5;
+int Pin0 = 0;
+int Pin4 = 4;
+int Pin2 = 2;
 
 const char* ssid = "NorfolkDwyer";
 const char* password = "fertilefields";
@@ -28,29 +31,46 @@ void setup(){
   delay(10000);
 
   if (WiFi.status() != WL_CONNECTED){
-    Serial.print("DKD not connected- ERROR");
+    Serial.print("Connection Failed!");
   }
   if (WiFi.status() == WL_CONNECTED){
-    Serial.print("DKD is connected: ");
+    Serial.print("Successfully connected to IP: ");
   }
 
   Serial.println(WiFi.localIP());
 
-  pinMode(motorPin5, OUTPUT);
-
+  pinMode(Pin5, OUTPUT);
+  pinMode(Pin0, OUTPUT);
+  pinMode(Pin4, OUTPUT);
+  pinMode(Pin2, OUTPUT);
+  
   server.on("/", HTTP_GET, [](){
     Serial.println();
     Serial.print("Got Request OFF!");
-    analogWrite(motorPin5, 0);
+    analogWrite(Pin5, 0);
+    analogWrite(Pin0, 0);
+    analogWrite(Pin4, 0);
+    analogWrite(Pin2, 0);
     server.send(200, "text/html", webpage_off);
   });
 
-  server.on("/on", HTTP_GET, [](){
+  server.on("/forward", HTTP_GET, [](){
     Serial.println();
     Serial.print("Got Request ON!");
-    analogWrite(motorPin5, 300);
-//    delay(2000);
-//    digitalWrite(motorPin5, 0);
+    analogWrite(Pin5, 300);
+    analogWrite(Pin0, 0);
+    analogWrite(Pin4, 0);
+    analogWrite(Pin2, 0);
+    server.send(200, "text/html", webpage_on);
+  });
+
+    server.on("/backward", HTTP_GET, [](){
+    Serial.println();
+    Serial.print("Got Request ON!");
+    analogWrite(Pin5, 300);
+    analogWrite(Pin0, 300);
+    analogWrite(Pin4, 0);
+    analogWrite(Pin2, 0);
     server.send(200, "text/html", webpage_on);
   });
 
